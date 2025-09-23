@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lamine Yamal - Starboy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('Lamine Yamal.png') center/cover no-repeat fixed;
+            background-size: 100% 100vh;
+            color: white;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #ff0000 0%, rgba(255, 0, 0, 0.5) 70%, transparent 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: screen;
+            transition: transform 0.1s ease;
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 0, 0, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        /* Background Animation Overlay */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(220, 20, 60, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 0, 0, 0.05) 0%, transparent 50%);
+            animation: breathe 8s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes breathe {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 0, 0, 0.6);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        .particle:nth-child(odd) {
+            background: rgba(220, 20, 60, 0.4);
+            animation-duration: 20s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            gap: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+        }
+
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            background: rgba(139, 0, 0, 0.6);
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-item:hover::before {
+            left: 100%;
+        }
+
+        .nav-item:hover {
+            background: rgba(220, 20, 60, 0.8);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.3);
+        }
+
+        /* Main Content */
+        .container {
+            position: relative;
+            z-index: 100;
+            min-height: 100vh;
+        }
+
+        /* Hero Section - Full viewport */
+        .hero-section {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Content Sections */
+        .content-section {
+            min-height: 100vh;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(139, 0, 0, 0.8) 100%);
+            backdrop-filter: blur(15px);
+            position: relative;
+            z-index: 200;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3em;
+            font-weight: bold;
+            color: #ff0000;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+        }
+
+        /* Text Content Styling */
+        .content-text {
+            text-align: center;
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.9);
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        .content-text p {
+            margin-bottom: 20px;
+        }
+
+        /* Credits Styling */
+        .credits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .credit-card {
+            background: rgba(139, 0, 0, 0.15);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .credit-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 0, 0, 0.6);
+            box-shadow: 0 15px 30px rgba(255, 0, 0, 0.2);
+        }
+
+        .credit-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #ff0000;
+            margin-bottom: 10px;
+        }
+
+        .credit-name {
+            font-size: 1.1em;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .credit-contact {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .credit-contact:hover {
+            color: #ff0000;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+
+        .stat-card {
+            background: rgba(139, 0, 0, 0.15);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transform-style: preserve-3d;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 0, 0, 0.1), rgba(220, 20, 60, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            border-color: rgba(255, 0, 0, 0.6);
+            box-shadow: 
+                0 20px 40px rgba(255, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #ff0000;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
+            to { text-shadow: 0 0 30px rgba(255, 0, 0, 0.8), 0 0 40px rgba(255, 0, 0, 0.3); }
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        /* Glitch Effect for Hover */
+        .stat-card:hover .stat-number {
+            animation: glitch 0.3s ease-in-out;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        /* Ripple Effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 0, 0, 0.6);
+            transform: scale(0);
+            animation: rippleEffect 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes rippleEffect {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader-text {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ff0000;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* Geometric Shapes */
+        .shape {
+            position: fixed;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .shape-circle {
+            width: 100px;
+            height: 100px;
+            border: 2px solid rgba(255, 0, 0, 0.3);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+
+        .shape-triangle {
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 45px solid rgba(220, 20, 60, 0.3);
+            animation: float 25s ease-in-out infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                background-size: auto 100vh;
+                background-position: center center;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            nav {
+                flex-direction: row;
+                gap: 10px;
+                padding: 15px 20px;
+                bottom: 20px;
+            }
+            
+            .nav-item {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+            
+            .stat-number {
+                font-size: 2.5em;
+            }
+
+            .section-title {
+                font-size: 2em;
+            }
+
+            .content-section {
+                padding: 50px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                background-size: auto 100vh;
+                background-position: center top;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-item {
+                padding: 6px 12px;
+                font-size: 0.8em;
+            }
+        }
+
+        /* Additional mobile landscape fix */
+        @media (max-width: 768px) and (orientation: landscape) {
+            body {
+                background-size: cover;
+                background-position: center center;
+            }
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-text">STARBOY</div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Background Overlay -->
+    <div class="bg-overlay"></div>
+
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Floating Shapes -->
+    <div class="shape shape-circle" style="top: 20%; left: 10%; animation-delay: -5s;"></div>
+    <div class="shape shape-circle" style="top: 60%; right: 15%; animation-delay: -12s;"></div>
+    <div class="shape shape-triangle" style="top: 30%; right: 25%; animation-delay: -8s;"></div>
+    <div class="shape shape-triangle" style="bottom: 20%; left: 20%; animation-delay: -15s;"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#about" class="nav-item">About</a>
+        <a href="#statistics" class="nav-item">Statistics</a>
+        <a href="#highlights" class="nav-item">Highlights</a>
+        <a href="#contact" class="nav-item">Contact</a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Hero Section - Pure background image -->
+        <section class="hero-section" id="hero">
+            <!-- This section shows the pure background image without interference -->
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="content-section" id="statistics">
+            <div class="section-container">
+                <h2 class="section-title fade-in">Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card fade-in">
+                        <div class="stat-number">19</div>
+                        <div class="stat-label">Goals This Season</div>
+                    </div>
+                    <div class="stat-card fade-in">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Assists</div>
+                    </div>
+                    <div class="stat-card fade-in">
+                        <div class="stat-number">92%</div>
+                        <div class="stat-label">Pass Accuracy</div>
+                    </div>
+                    <div class="stat-card fade-in">
+                        <div class="stat-number">17</div>
+                        <div class="stat-label">Age</div>
+                    </div>
+                    <div class="stat-card fade-in">
+                        <div class="stat-number">Spanish</div>
+                        <div class="stat-label">Nationality</div>
+                    </div>
+                    <div class="stat-card fade-in">
+                        <div class="stat-number">RW</div>
+                        <div class="stat-label">Position</div>
+                    </div>
+                    <div class="stat-card fade-in">
+                        <div class="stat-number">47</div>
+                        <div class="stat-label">Appearances</div>
+                    </div>
+                    <div class="stat-card fade-in">
+                        <div class="stat-number">FC Barcelona</div>
+                        <div class="stat-label">Team</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="content-section" id="about">
+            <div class="section-container">
+                <h2 class="section-title fade-in">About</h2>
+                <div class="content-text fade-in">
+                    <p>Rising star of FC Barcelona, Lamine Yamal represents the future of football. At just 17 years old, his exceptional talent and vision on the field have already made him one of the most promising players in world football.</p>
+                    
+                    <p>Born in Mataró, Spain, Yamal joined Barcelona's prestigious La Masia academy at the age of seven. His journey through the youth ranks was nothing short of spectacular, consistently outperforming players years older than him. His technical ability, pace, and football intelligence caught the attention of coaches and scouts from an early age.</p>
+                    
+                    <p>Making his first-team debut at just 15 years old, Yamal became the youngest player ever to represent Barcelona in an official match. His fearless approach to the game, combined with his natural flair and creativity, has drawn comparisons to some of the greatest wingers in football history.</p>
+                    
+                    <p>What sets Yamal apart is not just his individual brilliance, but his understanding of the game and ability to make his teammates better. His crossing accuracy, dribbling skills, and goal-scoring threat from wide positions make him a complete modern winger.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Highlights Section -->
+        <section class="content-section" id="highlights">
+            <div class="section-container">
+                <h2 class="section-title fade-in">Highlights</h2>
+                <div class="content-text fade-in">
+                    <p>From breakthrough performances in La Liga to stellar displays in European competitions, Lamine continues to break records and exceed expectations with every match.</p>
+                    
+                    <p><strong>Historic Debut:</strong> At 15 years, 9 months, and 16 days, Yamal became the youngest player to ever appear for Barcelona's first team, breaking a record that had stood for over a century. His composure and skill in that debut match hinted at the extraordinary career that lay ahead.</p>
+                    
+                    <p><strong>Champions League Excellence:</strong> His performances in Europe have been nothing short of sensational. From providing crucial assists to scoring spectacular goals, Yamal has shown he belongs on football's biggest stage. His pace and dribbling have terrorized some of Europe's best defenders.</p>
+                    
+                    <p><strong>International Recognition:</strong> Despite his young age, Yamal has already earned recognition at the international level, representing Spain across various youth categories. His performances have caught the attention of the senior national team coaches.</p>
+                    
+                    <p><strong>Record Breaker:</strong> With each appearance, Yamal continues to set new milestones. He's not just the youngest player in Barcelona's history, but also holds records for being the youngest scorer and assist provider in multiple competitions.</p>
+                    
+                    <p><strong>The Future is Now:</strong> Football analysts and former players consistently praise his maturity, technique, and football intelligence. Many believe he has the potential to become one of the greatest players of his generation.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="content-section" id="contact">
+            <div class="section-container">
+                <h2 class="section-title fade-in">Credits</h2>
+                <div class="content-text fade-in">
+                    <p>This website was brought to life through the collaborative efforts of talented professionals who share a passion for exceptional design and development.</p>
+                </div>
+                <div class="credits-grid">
+                    <div class="credit-card fade-in">
+                        <div class="credit-title">Web Designer & Developer</div>
+                        <div class="credit-name">Emmanuel Bediako</div>
+                        <a href="mailto:bediakoemmanuel036@gmail.com" class="credit-contact">bediakoemmanuel036@gmail.com</a>
+                    </div>
+                    <div class="credit-card fade-in">
+                        <div class="credit-title">Graphic Designer</div>
+                        <div class="credit-name">Pxblo Picxsso</div>
+                        <a href="https://linktr.ee/pxblopicxsso" target="_blank" class="credit-contact">linktr.ee/pxblopicxsso</a>
+                    </div>
+                </div>
+                <div class="content-text fade-in" style="margin-top: 40px;">
+                    <p>Special thanks to FC Barcelona and the incredible journey of Lamine Yamal that inspired this digital experience. The future of football is here.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        const trails = [];
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 10 + 'px';
+            cursor.style.top = e.clientY - 10 + 'px';
+            
+            // Create trail effect
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.style.left = e.clientX - 4 + 'px';
+            trail.style.top = e.clientY - 4 + 'px';
+            document.body.appendChild(trail);
+            
+            setTimeout(() => {
+                trail.style.opacity = '0';
+                trail.style.transform = 'scale(0)';
+                setTimeout(() => trail.remove(), 300);
+            }, 100);
+        });
+
+        // Particles Generation
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.width = Math.random() * 8 + 3 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            document.getElementById('particles').appendChild(particle);
+            
+            setTimeout(() => particle.remove(), 25000);
+        }
+
+        // Generate particles continuously
+        setInterval(createParticle, 500);
+
+        // Ripple Effect on Click
+        document.addEventListener('click', (e) => {
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            ripple.style.left = e.clientX - 25 + 'px';
+            ripple.style.top = e.clientY - 25 + 'px';
+            ripple.style.width = '50px';
+            ripple.style.height = '50px';
+            document.body.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 600);
+        });
+
+        // Scroll Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth Navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = item.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Loading Screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loader').style.display = 'none';
+                }, 500);
+            }, 2000);
+        });
+
+        // Parallax Effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.bg-overlay');
+            const speed = scrolled * 0.5;
+            parallax.style.transform = `translateY(${speed}px)`;
+        });
+
+        // Add dynamic breathing to stat numbers
+        setInterval(() => {
+            document.querySelectorAll('.stat-number').forEach(num => {
+                num.style.transform = `scale(${1 + Math.sin(Date.now() * 0.001) * 0.05})`;
+            });
+        }, 50);
+    </script>
+</body>
+</html>
