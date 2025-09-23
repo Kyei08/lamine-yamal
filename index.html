@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background: url('Lamine Yamal.png') center/cover no-repeat fixed;
+            background: url(Lamine.png) center/cover no-repeat fixed;
             background-size: 100% 100vh;
             color: white;
             overflow-x: hidden;
@@ -418,7 +418,7 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             body {
-                background-size: cover;
+                background-size: 150% auto;
                 background-position: center center;
                 background-attachment: scroll;
             }
@@ -455,7 +455,7 @@
 
         @media (max-width: 480px) {
             body {
-                background-size: 100vw auto;
+                background-size: 200% auto;
                 background-position: center center;
                 background-attachment: scroll;
             }
@@ -473,18 +473,18 @@
             }
         }
 
-        /* Very small screens - ensure full composition is visible */
+        /* Very small screens */
         @media (max-width: 380px) {
             body {
-                background-size: 100vw auto;
-                background-position: center top;
+                background-size: 250% auto;
+                background-position: center center;
             }
         }
 
         /* Mobile landscape fix */
         @media (max-width: 768px) and (orientation: landscape) {
             body {
-                background-size: auto 100vh;
+                background-size: auto 120%;
                 background-position: center center;
             }
         }
