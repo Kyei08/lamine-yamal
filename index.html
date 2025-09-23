@@ -11,14 +11,10 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background: url(Lamine.png) center/cover no-repeat fixed;
-            background-size: 100% 100vh;
-            color: white;
-            overflow-x: hidden;
-            cursor: none;
-        }
+     body {
+    background: url(Lamine.png) center/contain no-repeat fixed;
+    background-color: black; /* Or a color that matches your image's background */
+}
 
         /* Custom Cursor */
         .cursor {
@@ -416,12 +412,14 @@
         }
 
         /* Responsive Design */
-        @media (max-width: 768px) {
-            body {
-                background-size: 150% auto;
-                background-position: center center;
-                background-attachment: scroll;
-            }
+     
+@media (max-width: 768px) {
+    body {
+        background-size: auto 100vh;
+        background-position: center top; /* Center horizontally, align top vertically */
+        background-attachment: scroll; /* Change from fixed for better mobile performance */
+    }
+}
             
             .stats-grid {
                 grid-template-columns: 1fr;
