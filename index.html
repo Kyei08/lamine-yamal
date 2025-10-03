@@ -11,10 +11,14 @@
             box-sizing: border-box;
         }
 
-     body {
-    background: url(Lamine.png) center/contain no-repeat fixed;
-    background-color: black; /* Or a color that matches your image's background */
-}
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('Lamine.png') center/cover no-repeat fixed;
+            background-size: 100% 100vh;
+            color: white;
+            overflow-x: hidden;
+            cursor: none;
+        }
 
         /* Custom Cursor */
         .cursor {
@@ -412,14 +416,11 @@
         }
 
         /* Responsive Design */
-     
-@media (max-width: 768px) {
-    body {
-        background-size: auto 100vh;
-        background-position: center top; /* Center horizontally, align top vertically */
-        background-attachment: scroll; /* Change from fixed for better mobile performance */
-    }
-}
+        @media (max-width: 768px) {
+            body {
+                background-size: auto 100vh;
+                background-position: center center;
+            }
             
             .stats-grid {
                 grid-template-columns: 1fr;
@@ -453,16 +454,13 @@
 
         @media (max-width: 480px) {
             body {
-                background-size: 200% auto;
-                background-position: center center;
-                background-attachment: scroll;
+                background-size: auto 100vh;
+                background-position: center top;
             }
             
             nav {
                 flex-wrap: wrap;
                 justify-content: center;
-                gap: 8px;
-                padding: 12px 15px;
             }
             
             .nav-item {
@@ -471,18 +469,10 @@
             }
         }
 
-        /* Very small screens */
-        @media (max-width: 380px) {
-            body {
-                background-size: 250% auto;
-                background-position: center center;
-            }
-        }
-
-        /* Mobile landscape fix */
+        /* Additional mobile landscape fix */
         @media (max-width: 768px) and (orientation: landscape) {
             body {
-                background-size: auto 120%;
+                background-size: cover;
                 background-position: center center;
             }
         }
